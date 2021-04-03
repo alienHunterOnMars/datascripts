@@ -4,11 +4,14 @@ import requests, json, csv
 from datetime import datetime
 
 # lendingProtocol = Contract.from_abi('ILendingPool', '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9', LendingPool.abi)
-ssh_path = f"{os.getenv('HOME')}/scripts/AaveScripts/userDataExtraction@4HrGMT/"
+# ssh_path = f"{os.getenv('HOME')}/scripts/AaveScripts/userDataExtraction@4HrGMT/"
 aaveV2SubgraphURL = 'https://api.thegraph.com/subgraphs/name/aave/protocol-v2'
 ethereumBlocksSubgraphURL = 'https://api.thegraph.com/subgraphs/name/blocklytics/ethereum-blocks'
 
 blockNumbersTimestamp = []
+userAddressesList = []
+userAddressesDict = {}
+
 
 def _main():
     return populateUserAddresses24HrIntervals()
@@ -19,37 +22,21 @@ def populateUserAddresses24HrIntervals():
 
 
 def deployScript():
-    loadBlockNumbersList(1611100800, 3)
+    loadBlockNumbersList(1608076800, 111)
+    # print(datetime.utcfromtimestamp(int(1608076800 + 70*86400)).strftime('%Y-%m-%d %H:%M:%S'))
     print('Block numbers fetched for ' + str(len(blockNumbersTimestamp)) + ' days since 1609981200')
+    prevTimeStamp = 0
 
     for day in blockNumbersTimestamp:
         print('\n \n')
         print('time : ' + datetime.utcfromtimestamp(int(day['timestamp'])).strftime('%Y-%m-%d %H:%M:%S') + ' Block Number : ' + day['number'])
-        createFolderForANewDay(day['timestamp'])
-        userAddressesList = getUserAddresses(day['number'])
-        print('Total User Addresses Retrieved = ' + str(len(userAddressesList)))
-        instrumentSymbols, instrumentConfigs = getInstrumentsConfigForABlock(day['number'])  # fetches Instrument Config values for the current Block Number
-        writeInstrumentConfigsForADay(day['timestamp'], instrumentConfigs, instrumentSymbols)
-        print('Instrument Configuration Data Written Successfully to the file')
-        createUserDataFileForANewDay(day['timestamp'], instrumentSymbols)
-        print('File to store user Balances created Successfully')
-        i = 0
-        for user in userAddressesList:
-            # if i <= :
-            #     i = i+1
-            #     continue
-            user_reserve_balances = getUserData(user, day['number'])
-            totalDepositBalanceETH, totalCollateralETH, totalDebtETH, totalLiquidationThresholdETH, averageLiquidationThreshold, healthFactor = getUserBalancesRowWithComputedValues(
-                instrumentConfigs, user_reserve_balances)
-            addUserRowToCurrentFile(day['timestamp'], user, instrumentSymbols, user_reserve_balances,
-                                    totalDepositBalanceETH, totalCollateralETH, totalDebtETH,
-                                    totalLiquidationThresholdETH, averageLiquidationThreshold, healthFactor)
-            print(
-                str(i) + ' => Data written successfully for ' + user + ' for timestamp = ' + datetime.utcfromtimestamp(
-                    int(day['timestamp'])).strftime('%Y-%m-%d %H:%M:%S'))
-            i = i + 1
+        newUserAddresses = getUserAddresses(day['number'],prevTimeStamp)
+        print('Total NEW User Addresses Retrieved = ' + str(len(newUserAddresses)))
+        print('Total User Addresses Retrieved for the day ' + datetime.utcfromtimestamp(int(day['timestamp'])).strftime('%Y-%m-%d %H:%M:%S')  + ' is = ' + str(len(userAddressesList)))
+        writeAddressesForADay(day['timestamp'])
+        # print('User Addresses Data Written Successfully to the file')
+        prevTimeStamp = int(day['timestamp'])
 
-        print('\n \n')
 
 
 
@@ -77,3 +64,54 @@ def loadBlockNumbersList(_timestamp, numberOfDays):
             break
         blockNumbersTimestamp.append(blockData[0])
     return
+
+
+# GETS NEW USER ADDRESSES WHICH JOINED AAVE
+def getUserAddresses(_blockNumber, _prevTimestamp):
+    query = """ query($skipNum:Int, $prevTimestamp: Int, $blockNumber: Int) {
+                userReserves(first: 1000,  skip:$skipNum, orderBy: lastUpdateTimestamp, where: {lastUpdateTimestamp_gt: $prevTimestamp}, block:{number: $blockNumber} ) {
+                    user {
+                        id
+                    }
+                }    
+            }"""
+    skip = 0
+    newUserAddressesList = []
+
+    while (1):
+        variables = {'skipNum': skip, 'prevTimestamp': int(_prevTimestamp) ,'blockNumber': int(_blockNumber),  }
+        r = requests.post(aaveV2SubgraphURL, json={'query': query, 'variables': variables})
+        returnedVal = json.loads(r.text)
+        # print(returnedVal)
+        # if 'errors' in returnedVal:
+        #     break
+        users_data = returnedVal['data']['userReserves']
+        print('Skip = ' + str(skip) + ' userReserves = ' + str(len(users_data)))
+        if len(users_data) == 0:
+            break
+        for user in users_data:
+            address = user['user']['id']
+            if address not in userAddressesDict:
+                newUserAddressesList.append(address)
+                userAddressesList.append(address)
+                userAddressesDict[address] = True
+
+        skip = skip + 1000
+
+    # print(newUserAddressesList)
+    return newUserAddressesList
+
+
+def writeAddressesForADay(_timestamp):
+    path = './addresses/'
+    with open(path + str(_timestamp) + '.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        for userAddress in userAddressesList:
+            writer.writerow([userAddress])
+
+
+
+if __name__ == '__main__':
+    print('INITIATING SCRIPT')
+    # print(ssh_path)
+    _main()
