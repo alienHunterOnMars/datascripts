@@ -1,0 +1,2 @@
+id,pairAddress,date,timestamp,token 0 (Name),token 0 (Symbol),token 1 (Name),token 1 (Symbol),totalSupply,reserve 0,reserve 1,reserveUSD,Token 0 : dailyVolume,Token 1 : dailyVolume,dailyVolume (USD),daily Txns
+0xc1e81e7b8ebee5b9cd031428bd2c6a40c2d5518f-18710,0xc1e81e7b8ebee5b9cd031428bd2c6a40c2d5518f,2021-03-24 00:00:00,1616544000,Dragon,DRGN,Dragon,DRGN,5644.247207272141291075,1.10758806410980324,5644.247207272141291075,1778.174974576766782569487820953887,0,0,0,1

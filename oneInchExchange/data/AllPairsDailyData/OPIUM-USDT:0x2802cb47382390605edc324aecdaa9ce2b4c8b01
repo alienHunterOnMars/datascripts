@@ -1,0 +1,2 @@
+id,pairAddress,date,timestamp,token 0 (Name),token 0 (Symbol),token 1 (Name),token 1 (Symbol),totalSupply,reserve 0,reserve 1,reserveUSD,Token 0 : dailyVolume,Token 1 : dailyVolume,dailyVolume (USD),daily Txns
+0x2802cb47382390605edc324aecdaa9ce2b4c8b01-18657,0x2802cb47382390605edc324aecdaa9ce2b4c8b01,2021-01-30 00:00:00,1611964800,Tether USD,USDT,Tether USD,USDT,3,3,54.989453,105.9907745932454419914201853110857,0,0,0,1

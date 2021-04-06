@@ -1,0 +1,2 @@
+id,pairAddress,date,timestamp,token 0 (Name),token 0 (Symbol),token 1 (Name),token 1 (Symbol),totalSupply,reserve 0,reserve 1,reserveUSD,Token 0 : dailyVolume,Token 1 : dailyVolume,dailyVolume (USD),daily Txns
+0x420631a896f467d9d5eaa70f58eed8c8feeb18dd-18634,0x420631a896f467d9d5eaa70f58eed8c8feeb18dd,2021-01-07 00:00:00,1609977600,Concentrated Voting Power,CVP,Concentrated Voting Power,CVP,12.457220589245797762,0.02587202772518692,12.457220589245797762,32.66539548710105907045895316334366,0,0,0,1

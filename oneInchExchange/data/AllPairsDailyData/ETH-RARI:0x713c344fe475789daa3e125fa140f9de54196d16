@@ -1,0 +1,2 @@
+id,pairAddress,date,timestamp,token 0 (Name),token 0 (Symbol),token 1 (Name),token 1 (Symbol),totalSupply,reserve 0,reserve 1,reserveUSD,Token 0 : dailyVolume,Token 1 : dailyVolume,dailyVolume (USD),daily Txns
+0x713c344fe475789daa3e125fa140f9de54196d16-18674,0x713c344fe475789daa3e125fa140f9de54196d16,2021-02-16 00:00:00,1613433600,Rarible,RARI,Rarible,RARI,3.400864261002160944,0.043150063717667588,3.400864261002160944,75.28529511948684411589489334318149,0,0,0,1

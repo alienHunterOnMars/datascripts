@@ -1,0 +1,2 @@
+id,pairAddress,date,timestamp,token 0 (Name),token 0 (Symbol),token 1 (Name),token 1 (Symbol),totalSupply,reserve 0,reserve 1,reserveUSD,Token 0 : dailyVolume,Token 1 : dailyVolume,dailyVolume (USD),daily Txns
+0x335d1e5cb5a8c94450722964313914d6f6e7b2a9-18718,0x335d1e5cb5a8c94450722964313914d6f6e7b2a9,2021-04-01 00:00:00,1617235200,QAZCRYPTO INDEX ,QAZ,QAZCRYPTO INDEX ,QAZ,2.991077445486390999,0.152250258825440003,2.991077445486390999,292.3556113495926974535095330886944,0,0,0,1

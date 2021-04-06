@@ -1,0 +1,2 @@
+id,pairAddress,date,timestamp,token 0 (Name),token 0 (Symbol),token 1 (Name),token 1 (Symbol),totalSupply,reserve 0,reserve 1,reserveUSD,Token 0 : dailyVolume,Token 1 : dailyVolume,dailyVolume (USD),daily Txns
+0x1ecdc50b554ea2825197d2293c50a0fe147fafbd-18719,0x1ecdc50b554ea2825197d2293c50a0fe147fafbd,2021-04-02 00:00:00,1617321600,Crypto Social Network,CSN,Crypto Social Network,CSN,13491.147866047487649277,0.044526625591507249,13491.147866047487650243,176.5819818415487689737664058420418,0,0,0,2

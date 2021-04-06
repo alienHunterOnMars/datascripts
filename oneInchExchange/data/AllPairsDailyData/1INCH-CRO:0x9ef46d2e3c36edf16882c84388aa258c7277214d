@@ -1,0 +1,2 @@
+id,pairAddress,date,timestamp,token 0 (Name),token 0 (Symbol),token 1 (Name),token 1 (Symbol),totalSupply,reserve 0,reserve 1,reserveUSD,Token 0 : dailyVolume,Token 1 : dailyVolume,dailyVolume (USD),daily Txns
+0x9ef46d2e3c36edf16882c84388aa258c7277214d-18709,0x9ef46d2e3c36edf16882c84388aa258c7277214d,2021-03-23 00:00:00,1616457600,CRO,CRO,CRO,CRO,0.221640321353232698,0.221640321353233698,4.54420225,0.918756323501322506101780595228135,0,0,0,3

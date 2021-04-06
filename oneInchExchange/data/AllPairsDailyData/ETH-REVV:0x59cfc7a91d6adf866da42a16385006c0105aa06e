@@ -1,0 +1,2 @@
+id,pairAddress,date,timestamp,token 0 (Name),token 0 (Symbol),token 1 (Name),token 1 (Symbol),totalSupply,reserve 0,reserve 1,reserveUSD,Token 0 : dailyVolume,Token 1 : dailyVolume,dailyVolume (USD),daily Txns
+0x59cfc7a91d6adf866da42a16385006c0105aa06e-18721,0x59cfc7a91d6adf866da42a16385006c0105aa06e,2021-04-04 00:00:00,1617494400,REVV,REVV,REVV,REVV,4494.168086987303255793,1.089963135024633166,4494.168086987303255793,2224.940586851287524216349267236739,0,0,0,1

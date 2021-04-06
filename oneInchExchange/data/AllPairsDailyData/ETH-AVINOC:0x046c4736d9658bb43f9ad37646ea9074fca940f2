@@ -1,0 +1,2 @@
+id,pairAddress,date,timestamp,token 0 (Name),token 0 (Symbol),token 1 (Name),token 1 (Symbol),totalSupply,reserve 0,reserve 1,reserveUSD,Token 0 : dailyVolume,Token 1 : dailyVolume,dailyVolume (USD),daily Txns
+0x046c4736d9658bb43f9ad37646ea9074fca940f2-18671,0x046c4736d9658bb43f9ad37646ea9074fca940f2,2021-02-13 00:00:00,1613174400,AVINOC Token,AVINOC,AVINOC Token,AVINOC,5694.492393718018042536,0.272975789138162087,5694.492393718018041535,502.0563535262262756056644089208439,0,0,0,2

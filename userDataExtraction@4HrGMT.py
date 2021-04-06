@@ -20,7 +20,7 @@ def populateUserData24HrIntervals():
 
 
 def deployScript():
-    loadBlockNumbersList(1613174400 + 4*86400, 1)
+    loadBlockNumbersList(1613174400 + 33*86400, 1) # 28 - 13th March
 
     for day in blockNumbersTimestamp:
         print('\n \n')
@@ -35,9 +35,9 @@ def deployScript():
         print('File to store user Balances created Successfully')
         i = 0
         for user in userAddressesList:
-            # if i <= 12500:
-            #     i = i + 1
-            #     continue;
+            if i <= 17800:
+                i = i + 1
+                continue;
             user_reserve_balances = getUserData(user[0], day['number'])
             totalDepositBalanceETH, totalCollateralETH, totalDebtETH, totalLiquidationThresholdETH, averageLiquidationThreshold, healthFactor = getUserBalancesRowWithComputedValues( instrumentConfigs, user_reserve_balances)
             addUserRowToCurrentFile(day['timestamp'], user, instrumentSymbols, user_reserve_balances,totalDepositBalanceETH, totalCollateralETH, totalDebtETH, totalLiquidationThresholdETH, averageLiquidationThreshold, healthFactor)

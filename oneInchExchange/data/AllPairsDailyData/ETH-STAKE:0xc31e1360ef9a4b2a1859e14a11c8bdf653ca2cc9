@@ -1,0 +1,2 @@
+id,pairAddress,date,timestamp,token 0 (Name),token 0 (Symbol),token 1 (Name),token 1 (Symbol),totalSupply,reserve 0,reserve 1,reserveUSD,Token 0 : dailyVolume,Token 1 : dailyVolume,dailyVolume (USD),daily Txns
+0xc31e1360ef9a4b2a1859e14a11c8bdf653ca2cc9-18674,0xc31e1360ef9a4b2a1859e14a11c8bdf653ca2cc9,2021-02-16 00:00:00,1613433600,STAKE,STAKE,STAKE,STAKE,0,0.000000000000000013,0.000000000000001,0.00000000000004671196591362412245206368179454587,0,0,0,6
