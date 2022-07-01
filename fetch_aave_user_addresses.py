@@ -1,14 +1,11 @@
 import os
 import requests, json, csv
-# from brownie import Contract, network, LendingPool
 from datetime import datetime
 
-# lendingProtocol = Contract.from_abi('ILendingPool', '0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9', LendingPool.abi)
-# ssh_path = f"{os.getenv('HOME')}/scripts/AaveScripts/userDataExtraction@4HrGMT/"
 aaveV2SubgraphURL = 'https://api.thegraph.com/subgraphs/name/aave/protocol-v2'
 ethereumBlocksSubgraphURL = 'https://api.thegraph.com/subgraphs/name/blocklytics/ethereum-blocks'
 
-blockNumbersTimestamp = []
+blockNumbersTimestamp = []  
 userAddressesList = []
 userAddressesDict = {}
 
@@ -18,19 +15,21 @@ def _main():
 
 
 def populateUserAddresses24HrIntervals():
-    return deployScript()
+    return retrieveDataScript()
 
 
-def deployScript():
-    loadBlockNumbersList(1608076800, 111)
+def retrieveDataScript():
+    start_timestamp = 1608076800
+    number_of_days = 111
+    loadBlockNumbersList(start_timestamp, number_of_days)
     # print(datetime.utcfromtimestamp(int(1608076800 + 70*86400)).strftime('%Y-%m-%d %H:%M:%S'))
-    print('Block numbers fetched for ' + str(len(blockNumbersTimestamp)) + ' days since 1609981200')
+    print(f'Block numbers fetched for ' + str(len(blockNumbersTimestamp)) + ' days since {start_timestamp}')
     prevTimeStamp = 0
 
     for day in blockNumbersTimestamp:
         print('\n \n')
         print('time : ' + datetime.utcfromtimestamp(int(day['timestamp'])).strftime('%Y-%m-%d %H:%M:%S') + ' Block Number : ' + day['number'])
-        newUserAddresses = getUserAddresses(day['number'],prevTimeStamp)
+        newUserAddresses = getUserAddresses(day['number'], prevTimeStamp)
         print('Total NEW User Addresses Retrieved = ' + str(len(newUserAddresses)))
         print('Total User Addresses Retrieved for the day ' + datetime.utcfromtimestamp(int(day['timestamp'])).strftime('%Y-%m-%d %H:%M:%S')  + ' is = ' + str(len(userAddressesList)))
         writeAddressesForADay(day['timestamp'])
@@ -41,8 +40,6 @@ def deployScript():
 
 
 
-# GETTING BLOCK NUMBERS BASED ON TIMESTAMPS
-# GETTING BLOCK NUMBERS BASED ON TIMESTAMPS
 # GETTING BLOCK NUMBERS BASED ON TIMESTAMPS
 def loadBlockNumbersList(_timestamp, numberOfDays):
     query = """ query($timestamp: Int)   {
@@ -91,6 +88,7 @@ def getUserAddresses(_blockNumber, _prevTimestamp):
             break
         for user in users_data:
             address = user['user']['id']
+            # check if user address is already present in `userAddressesDict`, if not, add it to `newUserAddressesList` and `userAddressesDict`
             if address not in userAddressesDict:
                 newUserAddressesList.append(address)
                 userAddressesList.append(address)

@@ -16,28 +16,37 @@ def _main():
 
 
 def populateUserData24HrIntervals():
-    return deployScript()
+    return retrieveDataScript()
 
 
-def deployScript():
+def retrieveDataScript():
     loadBlockNumbersList(1613174400 + 33*86400, 1) # 28 - 13th March
 
     for day in blockNumbersTimestamp:
         print('\n \n')
         print('time : ' + datetime.utcfromtimestamp(int(day['timestamp'])).strftime('%Y-%m-%d %H:%M:%S') + ' Block Number : ' + day['number'])
+
+        # create folder for the new day in which data will be stored
         createFolderForANewDay(day['timestamp'])
+        # get user addresses that have interacted with aave till that day
         userAddressesList = getUserAddresses(day['timestamp'])
         print('Total User Addresses Retrieved = ' + str(len(userAddressesList)))
-        instrumentSymbols, instrumentConfigs = getInstrumentsConfigForABlock(day['number'])  # fetches Instrument Config values for the current Block Number
+
+        # fetches Instrument Config values for the current Block Number and then write them to the file
+        instrumentSymbols, instrumentConfigs = getInstrumentsConfigForABlock(day['number'])  
         writeInstrumentConfigsForADay(day['timestamp'], instrumentConfigs, instrumentSymbols)
         print('Instrument Configuration Data Written Successfully to the file')
+
+        # create file to store user balances for that day
         createUserDataFileForANewDay(day['timestamp'], instrumentSymbols)
         print('File to store user Balances created Successfully')
         i = 0
+
+        # Retrieve balances for each user, calculate HF, and store the data in the file
         for user in userAddressesList:
-            if i <= 17800:
-                i = i + 1
-                continue;
+            # if i <= 17800:
+            #     i = i + 1
+            #     continue;
             user_reserve_balances = getUserData(user[0], day['number'])
             totalDepositBalanceETH, totalCollateralETH, totalDebtETH, totalLiquidationThresholdETH, averageLiquidationThreshold, healthFactor = getUserBalancesRowWithComputedValues( instrumentConfigs, user_reserve_balances)
             addUserRowToCurrentFile(day['timestamp'], user, instrumentSymbols, user_reserve_balances,totalDepositBalanceETH, totalCollateralETH, totalDebtETH, totalLiquidationThresholdETH, averageLiquidationThreshold, healthFactor)
@@ -79,8 +88,6 @@ def getUserBalancesRowWithComputedValues(instrumentConfigs, user_reserve_balance
 '''
 Description : Get balances for all the reserves for a user at a particular block number
 '''
-
-
 def getUserData(userAddress, _blockNumber):
     query = """ query($ID: String , $blockNumber: Int) {
       user(id: $ID, block:{number: $blockNumber}) {
@@ -151,8 +158,6 @@ def getInstrumentsConfigForABlock(_blockNumber):
 '''
     description: Fetch addresses of the users participating in Aave Protocol
 '''
-
-
 def getUserAddresses(_Timestamp):
     ssh_path_ = './addresses/'
     with open(ssh_path_ + str(_Timestamp) + '.csv', newline='') as f:
